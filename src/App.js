@@ -1,5 +1,9 @@
+import Lists from './components/lists/Lists'
+
 function App() {
-  return null;
+  return (
+    <Lists />
+  );
 }
 
 export default App;
