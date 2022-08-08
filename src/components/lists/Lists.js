@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import './Lists.css';
 
 //Handles the list functionality
 const Lists = () => {
@@ -45,23 +44,46 @@ const Lists = () => {
         return list;
     }
 
+    function resetForm(){
+        setText(prevState => ({
+            ...prevState,
+            text: '',
+            visible: false
+        }))
+    }
+
     return (
-        <div className="list-gen">
-            <div className="input-area">
-                <h1>Enter List Here</h1>
-                <textarea
-                    id="list-input"
-                    rows="20"
-                    cols="50"
-                    value={text.text}
-                    onChange={handleInput}
-                ></textarea>
-                <button className="shuffle-btn" onClick={handleSubmit}>Shuffle List</button>
-                <ol>
-                    {text.visible ? list.map(item => <li>{item}</li>) : null}
-                </ol>
-            </div>
-        </div>
+        <>
+            <section id="page-desc">
+
+                <h2>List Randomizer</h2>
+                <p>This form allows you to arrange the items of a list in random order. The randomness comes from atmospheric noise, which for many purposes is better than the pseudo-random number algorithms typically used in computer programs.</p>
+
+            </section>
+            <section id="list-gen">
+
+                <h2>Part 1: Enter List Items</h2>
+                <p>Enter your items in the field below, each on a separate line. Items can be numbers, names, email addresses, etc. A maximum of 10,000 items are allowed. Please don't enter anything you would consider confidential</p>
+
+                <div className="input-area">
+                    <textarea
+                        id="list-input"
+                        rows="20"
+                        cols="50"
+                        value={text.text}
+                        onChange={handleInput}
+                    ></textarea>
+                    <p>(you're viewing this form securely)</p>
+                    <ol>
+                        {text.visible ? list.map(item => <li>{item}</li>) : null}
+                    </ol>
+                </div>
+
+                <h2>Part 2: Go!</h2>
+                <button onClick={handleSubmit}>Randomize</button>
+                <button onClick={resetForm}>Reset Form</button>
+            </section>
+        </>
     )
 }
 
