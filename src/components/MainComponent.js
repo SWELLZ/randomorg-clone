@@ -10,9 +10,9 @@ const Main = () => {
     return (
         <Router>
             <HeaderComponent/>
-            <IntegerGenerator/>
             <Routes>
                 <Route path="/list-randomizer" element={<ListRandomizer/>} />
+                <Route path="/integer-generator" element={<IntegerGenerator/>} />
                 <Route path="*" element={<ErrorPage/>}/>
             </Routes>
         </Router>

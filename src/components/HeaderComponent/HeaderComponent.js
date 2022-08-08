@@ -9,7 +9,7 @@ const HeaderComponent = () => {
             <ul>
                 <Link to="/" >Home</Link>
                 <li><a href="#">Games</a></li>
-                <li><a href="#">Numbers</a></li>
+                <Link to="/integer-generator" >Numbers</Link>
                 <Link to="/list-randomizer" >Lists & More</Link>
                 <li><a href="#">Drawings</a></li>
                 <li><a href="#">Web Tools</a></li>
