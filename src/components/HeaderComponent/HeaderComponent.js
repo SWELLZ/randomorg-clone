@@ -1,3 +1,4 @@
+import logo from '../images/randomorg-logo.png'
 
 const HeaderComponent = () => {
     return (
@@ -17,7 +18,7 @@ const HeaderComponent = () => {
             </ul>
         </nav>
 
-        <img src="" alt="logo"/>
+        <img src={logo} alt="logo"/>
 
         <div className="search-section">
           <div className="search-bar">
