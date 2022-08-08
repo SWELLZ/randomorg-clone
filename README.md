@@ -15,4 +15,12 @@ This is a clone of Random.org that I am making for practice with React. I chose 
 1. Then just run ```npm install``` or ```yarn install``` to download node_modules
 1. finally, start a local dev environment using ```npm start``` and make your changes!
 
+### Live Site
+Since I now have a tiny bit of functionality, I have posted the site online [here](https://randomorg-clone.netlify.app/). No links in the navbar work and neither does the search bar. Currently, you can only shuffle a list of items and it will be displayed in an ordered list under the text area
+
+Since this site uses React, it is super fast and the shuffled list generates much quicker than the real Random org site. And it will be a single page application since SEO isn't a concern.
+
+This site is hosted on Netlify since I don't expect a lot of traffic
+[![Netlify Status](https://api.netlify.com/api/v1/badges/30b1afaf-c679-4820-a278-2b5829492c2f/deploy-status)](https://app.netlify.com/sites/randomorg-clone/deploys)
+
 ## Thanks!
