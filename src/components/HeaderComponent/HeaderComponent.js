@@ -1,15 +1,16 @@
 import logo from '../images/randomorg-logo.png'
 import './headerComponent.css';
+import { Link } from 'react-router-dom';
 
 const HeaderComponent = () => {
     return (
       <header>
         <nav id="navbar">
             <ul>
-                <li><a href="#">Home</a></li>
+                <Link to="/" >Home</Link>
                 <li><a href="#">Games</a></li>
                 <li><a href="#">Numbers</a></li>
-                <li><a href="#">Lists & More</a></li>
+                <Link to="/list-randomizer" >Lists & More</Link>
                 <li><a href="#">Drawings</a></li>
                 <li><a href="#">Web Tools</a></li>
                 <li><a href="#">Statistics</a></li>
