@@ -79,7 +79,7 @@ const ListRandomizer = () => {
                 </div>
 
                 <h2>Part 2: Go!</h2>
-                <button onClick={handleSubmit}>Randomize</button>
+                <button onClick={handleSubmit}>{!text.visible ? 'Randomize' : 'Re-Shuffle'}</button>
                 <button onClick={resetForm}>Reset Form</button>
             </section>
             <ol>
