@@ -1,8 +1,8 @@
-import Lists from './components/lists/Lists';
+import Main from './components/MainComponent';
 
 function App() {
   return (
-    <Lists />
+    <Main/>
   );
 }
 
