@@ -1,12 +1,16 @@
 import React from "react";
+
+
 import HeaderComponent from "./HeaderComponent/HeaderComponent";
-import Lists from "./lists/Lists";
+import ListRandomizer from "./lists/ListRandomizerComponent";
+import IntegerGenerator from "./numbers/IntegerGeneratorComponent";
 
 const Main = () => {
     return (
         <>
             <HeaderComponent/>
-            <Lists />
+            <IntegerGenerator/>
+            <ListRandomizer />
         </>
     )
 }

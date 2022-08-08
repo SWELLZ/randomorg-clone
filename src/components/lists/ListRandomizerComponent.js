@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 //Handles the list functionality
-const Lists = () => {
+const ListRandomizer = () => {
     //initialize the final list and textarea text variables
     const [list, setList] = useState([]);
     const [text, setText] = useState({
@@ -55,7 +55,7 @@ const Lists = () => {
 
     return (
         <>
-            <section id="page-desc">
+            <section id="list-gen-desc">
 
                 <h2>List Randomizer</h2>
                 <p>This form allows you to arrange the items of a list in random order. The randomness comes from atmospheric noise, which for many purposes is better than the pseudo-random number algorithms typically used in computer programs.</p>
@@ -89,4 +89,4 @@ const Lists = () => {
     )
 }
 
-export default Lists;
+export default ListRandomizer;
