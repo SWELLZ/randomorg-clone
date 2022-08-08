@@ -20,8 +20,23 @@ const Lists = () => {
     function handleSubmit(){
         var newText = Object.assign({}, text); //makes copy of text object
 
-        setList(newText.text.split('\n'));
+        setList(shuffleList(newText.text.split('\n')));
         setText(prevState => ({...prevState, visible: true}))
+    }
+
+    function shuffleList(list){
+        var len = list.length;
+        var i = -1;
+        var j, k;
+
+        while (++i < len){
+            j = Math.floor(Math.random() * len);
+            k = Math.floor(Math.random() * len);
+            var t = list[j];
+            list[j] = list[k];
+            list[k] = t;
+        }
+        return list;
     }
 
     //TEMPORARY
