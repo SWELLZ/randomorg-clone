@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import './Lists.css';
 
 //Handles the list functionality
 const Lists = () => {
@@ -20,16 +21,21 @@ const Lists = () => {
     function handleSubmit(){
         var newText = Object.assign({}, text); //makes copy of text object
 
-        setList(shuffleList(newText.text.split('\n')));
-        setText(prevState => ({...prevState, visible: true}))
+        if (newText.text == false){
+            throw new Error('Empty list');
+        } else {
+            setList(shuffleList(newText.text.split('\n')));
+            setText(prevState => ({...prevState, visible: true}))
+        }
     }
 
+    //randomizes list in a function
     function shuffleList(list){
         var len = list.length;
         var i = -1;
         var j, k;
 
-        while (++i < len){
+        while (++i < len){ //loops over list until completely shuffled
             j = Math.floor(Math.random() * len);
             k = Math.floor(Math.random() * len);
             var t = list[j];
@@ -37,11 +43,6 @@ const Lists = () => {
             list[k] = t;
         }
         return list;
-    }
-
-    //TEMPORARY
-    function hideList(){
-        setText(prevState => ({...prevState, visible: false}))
     }
 
     return (
@@ -55,8 +56,7 @@ const Lists = () => {
                     value={text.text}
                     onChange={handleInput}
                 ></textarea>
-                <button onClick={handleSubmit}>Submit</button>
-                <button onClick={hideList}>Set to false</button>
+                <button className="shuffle-btn" onClick={handleSubmit}>Shuffle List</button>
                 <ol>
                     {text.visible ? list.map(item => <li>{item}</li>) : null}
                 </ol>
