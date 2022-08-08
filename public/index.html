@@ -8,9 +8,39 @@
       content="Random org clone to randomize lists"
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="./styles.css"/>
     <title>Random Org Clone</title>
   </head>
   <body>
-    <div id="root"></div>
+    <header>
+      <nav id="navbar">
+          <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Games</a></li>
+              <li><a href="#">Numbers</a></li>
+              <li><a href="#">Lists & More</a></li>
+              <li><a href="#">Drawings</a></li>
+              <li><a href="#">Web Tools</a></li>
+              <li><a href="#">Statistics</a></li>
+              <li><a href="#">Testimonials</a></li>
+              <li><a href="#">Learn More</a></li>
+              <li><a href="#">Login</a></li>
+          </ul>
+      </nav>
+
+      <img src="./resources/randomorg-logo.png"/>
+
+      <div class="search-section">
+        <div class="search-bar">
+          <label for="search">Search RANDOM.ORG</label>
+          <input id="search" name="search" type="text"/><button>Search</button>
+        </div>
+        <h4>True Random Number Service</h4>
+      </div>
+      
+    </header>
+    <main>
+      <div id="root"></div>
+    </main>
   </body>
 </html>

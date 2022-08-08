@@ -44,6 +44,7 @@ const Lists = () => {
         return list;
     }
 
+    //resets form value and hides shuffled list
     function resetForm(){
         setText(prevState => ({
             ...prevState,
@@ -74,15 +75,16 @@ const Lists = () => {
                         onChange={handleInput}
                     ></textarea>
                     <p>(you're viewing this form securely)</p>
-                    <ol>
-                        {text.visible ? list.map(item => <li>{item}</li>) : null}
-                    </ol>
+                    
                 </div>
 
                 <h2>Part 2: Go!</h2>
                 <button onClick={handleSubmit}>Randomize</button>
                 <button onClick={resetForm}>Reset Form</button>
             </section>
+            <ol>
+                {text.visible ? list.map(item => <li>{item}</li>) : null}
+            </ol>
         </>
     )
 }

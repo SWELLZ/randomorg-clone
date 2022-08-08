@@ -1,4 +1,4 @@
-import Lists from './components/lists/Lists'
+import Lists from './components/lists/Lists';
 
 function App() {
   return (
