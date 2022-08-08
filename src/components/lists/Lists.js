@@ -57,9 +57,9 @@ const Lists = () => {
                 ></textarea>
                 <button onClick={handleSubmit}>Submit</button>
                 <button onClick={hideList}>Set to false</button>
-                <div>
-                    {text.visible ? list.map(item => <p>{item}</p>) : <p></p>}
-                </div>
+                <ol>
+                    {text.visible ? list.map(item => <li>{item}</li>) : null}
+                </ol>
             </div>
         </div>
     )
