@@ -1,4 +1,5 @@
 import logo from '../images/randomorg-logo.png'
+import './headerComponent.css';
 
 const HeaderComponent = () => {
     return (
