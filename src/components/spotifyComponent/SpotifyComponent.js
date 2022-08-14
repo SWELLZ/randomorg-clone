@@ -11,8 +11,10 @@ function SpotifyComponent() {
     const [token, setToken] = useState(''); //token of user
     //variable storing entire API object (playlists)
     const [playlists, setPlaylists] = useState({});
-    //Used to store the specific playlist the user wants to shuffle
-    const [playlistToShuffle, setPlaylistToShuffle] = useState('');
+    //Used to store the selected playlist ID
+    const [playlistID, setPlaylistID] = useState('');
+    const [playlistToShuffle, setPlaylistToShuffle] = useState({});
+    let playlistTracks = [];
 
     //gets user playlists from spotify
     const fetchUserPlaylists = async () => {
@@ -22,16 +24,15 @@ function SpotifyComponent() {
             .then((response) => response.json())
     }
     const fetchPlaylistItems = async () => {
-        return await fetch(`https://api.spotify.com/v1/playlists/${playlistToShuffle}/tracks`, {
+        return await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
             headers: {'Authorization': 'Bearer ' + token}
         })
             .then((response) => response.json())
     }
 
     //sets the playlists var to the result of fetch
-    const displayPlaylists = async () => {
+    const fetchPlaylists = async () => {
         setPlaylists(await fetchUserPlaylists());
-        console.log(playlists.next);
     }
 
     //renders each playlist as a <p> element
@@ -63,13 +64,14 @@ function SpotifyComponent() {
                 break;
             }
         }
-        //console.log(playlists.items[0])
-        setPlaylistToShuffle(playlist);
+        
+        setPlaylistID(playlist);
     }
 
     const renderPlaylistItems = async () => {
-        console.log(await fetchPlaylistItems());
-    } 
+        setPlaylistToShuffle(await fetchPlaylistItems());
+    }
+         
 
     useEffect(() => {
         //variables for access token
@@ -84,33 +86,40 @@ function SpotifyComponent() {
         setToken(access_token);
     }, [])
 
-    const displayPlaylistItems = () => {
-        if (playlistToShuffle.items){
+    const displayPlaylistItems = async () => {
+        await renderPlaylistItems();
+        if (playlistToShuffle){
+            playlistToShuffle.items.forEach((elem) => 
+                playlistTracks.push(elem)
+            );
+
+            
+            playlistTracks.map(elem => {
+                const para = document.createElement('p')
+                para.innerHTML = elem.track.name;
+                document.getElementById('songs').appendChild(para)
+            })
+
             return (
-                <div>
-                    <h1>Item</h1>
-                    {playlistToShuffle.items.map((element, index) => {
-                        return <p>{element[0].track.name}</p>
-                    })}
-                </div>
+                <h1>Item</h1>
             )
         } else {
             return <p>No songs</p>
         }
     }
-
+    
     return (
         <>
             {/*Login oAuth*/}
             <a rel='noreferrer' target="_blank" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a> 
 
-            <button onClick={displayPlaylists}>Click when signed in</button>
+            <button onClick={fetchPlaylists}>Click when signed in</button>
 
             <h1>Spotify API Feature *WIP*</h1>
-            <button onClick={renderPlaylistItems}>LAKFLK</button>
+            <button onClick={displayPlaylistItems}>Display Songs</button>
 
             {renderPlaylists()}
-            {displayPlaylistItems()}
+            <div id='songs'></div>
         </>
     )
 }
