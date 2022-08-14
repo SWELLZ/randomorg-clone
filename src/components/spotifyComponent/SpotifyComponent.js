@@ -42,9 +42,12 @@ function SpotifyComponent() {
     }
 
     useEffect(() => {
+        var access_token;
         //Extract token from url
         const hash = window.location.hash;
-        const access_token = hash.split('&').find(elem => elem.startsWith('#access_token')).split('=')[1];
+        if (hash.includes('access_token')){
+            access_token = hash.split('&').find(elem => elem.startsWith('#access_token')).split('=')[1];
+        }
         
         setToken(access_token);
     }, [])
