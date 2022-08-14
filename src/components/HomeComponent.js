@@ -11,6 +11,7 @@ function HomeComponent() {
             <ol>
                 <li><Link to="/list-randomizer">List Randomizer</Link></li>
                 <li><Link to="/integer-generator" >Number Randomizer</Link></li>
+                <li><Link to="/spotify" >*WIP* Spotify playlist shuffle with API</Link></li>
             </ol>
         </div>
         <section id="home-intro">
