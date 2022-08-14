@@ -31,7 +31,7 @@ function SpotifyComponent() {
     //sets the playlists var to the result of fetch
     const displayPlaylists = async () => {
         setPlaylists(await fetchUserPlaylists());
-        console.log(playlists);
+        console.log(playlists.next);
     }
 
     //renders each playlist as a <p> element
@@ -84,6 +84,21 @@ function SpotifyComponent() {
         setToken(access_token);
     }, [])
 
+    const displayPlaylistItems = () => {
+        if (playlistToShuffle.items){
+            return (
+                <div>
+                    <h1>Item</h1>
+                    {playlistToShuffle.items.map((element, index) => {
+                        return <p>{element[0].track.name}</p>
+                    })}
+                </div>
+            )
+        } else {
+            return <p>No songs</p>
+        }
+    }
+
     return (
         <>
             {/*Login oAuth*/}
@@ -95,6 +110,7 @@ function SpotifyComponent() {
             <button onClick={renderPlaylistItems}>LAKFLK</button>
 
             {renderPlaylists()}
+            {displayPlaylistItems()}
         </>
     )
 }
