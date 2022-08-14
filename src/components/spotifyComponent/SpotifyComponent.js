@@ -7,44 +7,76 @@ function SpotifyComponent() {
     const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
     const RESPONSE_TYPE = 'token';
 
+    //variable to store access token
     const [token, setToken] = useState(''); //token of user
-    var userPlaylists;
+    //variable storing entire API object (playlists)
     const [playlists, setPlaylists] = useState({});
+    //Used to store the specific playlist the user wants to shuffle
+    const [playlistToShuffle, setPlaylistToShuffle] = useState('');
 
+    //gets user playlists from spotify
     const fetchUserPlaylists = async () => {
-        //recieve user playlists from spotify
         return await fetch('https://api.spotify.com/v1/me/playlists', {
             headers: {'Authorization': 'Bearer ' + token}
         })
             .then((response) => response.json())
     }
-    const buttonClick = async () => {
-        userPlaylists = await fetchUserPlaylists();
-        setPlaylists(await fetchUserPlaylists());
-        console.log(userPlaylists);
+    const fetchPlaylistItems = async () => {
+        return await fetch(`https://api.spotify.com/v1/playlists/${playlistToShuffle}/tracks`, {
+            headers: {'Authorization': 'Bearer ' + token}
+        })
+            .then((response) => response.json())
     }
 
+    //sets the playlists var to the result of fetch
+    const displayPlaylists = async () => {
+        setPlaylists(await fetchUserPlaylists());
+        console.log(playlists);
+    }
+
+    //renders each playlist as a <p> element
     const renderPlaylists = () => {
-        if (playlists.items) {
+        if (playlists.items) { //if data is recieved
             return (
                 <div>
                     <h1>Playlists</h1>
                     {playlists.items.map(element => {
-                        return <p key={element.name}>{element.name}</p>
+                        return <button key={element.name} onClick={selectPlaylist}>{element.name}</button>
                     })}
                 </div>
             )
         } else {
-            return (
+            return ( //if user not signed in:
                 <p>You are not Signed in.</p>
             )
         }
     }
 
+    //stores variable of button text to variable
+    const selectPlaylist = (e) => {
+        var playlist;
+        let playlistsLen = playlists.items.length
+        //loops through playlists to find id
+        for (let i = 0; i < playlistsLen; i++){
+            if (e.target.innerHTML === playlists.items[i].name){
+                playlist = playlists.items[i].id;
+                break;
+            }
+        }
+        //console.log(playlists.items[0])
+        setPlaylistToShuffle(playlist);
+    }
+
+    const renderPlaylistItems = async () => {
+        console.log(await fetchPlaylistItems());
+    } 
+
     useEffect(() => {
+        //variables for access token
         var access_token;
-        //Extract token from url
         const hash = window.location.hash;
+
+        //Extract token from url
         if (hash.includes('access_token')){
             access_token = hash.split('&').find(elem => elem.startsWith('#access_token')).split('=')[1];
         }
@@ -54,9 +86,14 @@ function SpotifyComponent() {
 
     return (
         <>
-            <a rel='noreferrer' target="_blank" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
-            <button onClick={buttonClick}>Click when signed in</button>
+            {/*Login oAuth*/}
+            <a rel='noreferrer' target="_blank" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a> 
+
+            <button onClick={displayPlaylists}>Click when signed in</button>
+
             <h1>Spotify API Feature *WIP*</h1>
+            <button onClick={renderPlaylistItems}>LAKFLK</button>
+
             {renderPlaylists()}
         </>
     )
