@@ -40,7 +40,7 @@ function SpotifyComponent() {
         if (playlists.items) { //if data is recieved
             return (
                 <div>
-                    <h2>STEP 4:</h2>
+                    <h2>STEP 3:</h2>
                     <p>Select playlist</p>
                     {playlists.items.map(element => {
                         return <button key={element.name} onClick={selectPlaylist}>{element.name}</button>
@@ -50,7 +50,7 @@ function SpotifyComponent() {
         } else {
             return ( //if user not signed in:
                 <>
-                    <h2>STEP 4:</h2>
+                    <h2>STEP 3:</h2>
                     <p>You are not Signed in.</p>
                 </>
             )
