@@ -14,8 +14,8 @@ function SpotifyComponent() {
     //Used to store the selected playlist fetched data
     const [playlistToShuffle, setPlaylistToShuffle] = useState({});
     let playlistTracks = []; //list of tracks from fetch
+    const songsDiv = document.getElementById('songs') //where songs will be shown
 
-        //FETCH FUNCTIONS
     //gets user playlists from spotify
     const fetchUserPlaylists = async () => {
         return await fetch('https://api.spotify.com/v1/me/playlists', {
@@ -84,14 +84,7 @@ function SpotifyComponent() {
             playlistTracks[j] = playlistTracks[k];
             playlistTracks[k] = t;
         }
-        if (document.getElementById('songs').hasChildNodes()){
-            while (document.getElementById('songs').firstChild){
-                document.getElementById('songs').lastChild.remove()
-            }
-            displayPlaylistItems()
-        } else {
-            displayPlaylistItems()
-        }
+        displayPlaylistItems()
     }     
 
     useEffect(() => {
@@ -107,18 +100,23 @@ function SpotifyComponent() {
         setToken(access_token);
     }, [])
 
+    const removeDivItems = () => {
+        while (songsDiv.hasChildNodes()){
+            songsDiv.lastChild.remove();
+        }
+        console.log('test')
+    }
+
     //Displays playlist tracks as p elements
-    const displayPlaylistItems = async () => {
-        const songsDiv = document.getElementById('songs')
+    const displayPlaylistItems = () => {
+        removeDivItems();
         //pushes each element in object into an array
         playlistToShuffle.items.forEach((elem) => 
             playlistTracks.push(elem)
         );
 
         //Removes existing track elements if they exist
-        while (songsDiv.firstChild){
-            songsDiv.lastChild.remove();
-        }
+        
         
         //creates p element for each element in tracklist
         playlistTracks.map(elem => {
