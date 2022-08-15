@@ -4,7 +4,7 @@ import API_KEY from '../../config';
 function SpotifyComponent() {
     //Spotify api requirements
     const CLIENT_ID = API_KEY;
-    const REDIRECT_URI = 'http://localhost:3000/spotify';
+    const REDIRECT_URI = 'https://randomorg-clone.netlify.app/spotify';
     const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
     const RESPONSE_TYPE = 'token';
 
