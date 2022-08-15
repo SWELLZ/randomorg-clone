@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {config} from '../../config';
+import API_KEY from '../../config';
 
 function SpotifyComponent() {
     //Spotify api requirements
-    const CLIENT_ID = config.client_id;
+    const CLIENT_ID = API_KEY;
     const REDIRECT_URI = 'http://localhost:3000/spotify';
     const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
     const RESPONSE_TYPE = 'token';
