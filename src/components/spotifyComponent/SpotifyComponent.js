@@ -11,11 +11,11 @@ function SpotifyComponent() {
     const [token, setToken] = useState(''); //token of user
     //variable storing entire API object (playlists)
     const [playlists, setPlaylists] = useState({});
-    //Used to store the selected playlist ID
-    const [playlistID, setPlaylistID] = useState('');
+    //Used to store the selected playlist fetched data
     const [playlistToShuffle, setPlaylistToShuffle] = useState({});
-    let playlistTracks = [];
+    let playlistTracks = []; //list of tracks from fetch
 
+        //FETCH FUNCTIONS
     //gets user playlists from spotify
     const fetchUserPlaylists = async () => {
         return await fetch('https://api.spotify.com/v1/me/playlists', {
@@ -23,8 +23,8 @@ function SpotifyComponent() {
         })
             .then((response) => response.json())
     }
-    const fetchPlaylistItems = async () => {
-        return await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
+    const fetchPlaylistItems = async (id) => {
+        return await fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
             headers: {'Authorization': 'Bearer ' + token}
         })
             .then((response) => response.json())
@@ -40,7 +40,7 @@ function SpotifyComponent() {
         if (playlists.items) { //if data is recieved
             return (
                 <div>
-                    <h1>Playlists</h1>
+                    <h2>Playlists</h2>
                     {playlists.items.map(element => {
                         return <button key={element.name} onClick={selectPlaylist}>{element.name}</button>
                     })}
@@ -48,13 +48,16 @@ function SpotifyComponent() {
             )
         } else {
             return ( //if user not signed in:
-                <p>You are not Signed in.</p>
+                <>
+                    <h2>STEP 4:</h2>
+                    <p>You are not Signed in.</p>
+                </>
             )
         }
     }
 
     //stores variable of button text to variable
-    const selectPlaylist = (e) => {
+    const selectPlaylist = async (e) => {
         var playlist;
         let playlistsLen = playlists.items.length
         //loops through playlists to find id
@@ -64,12 +67,8 @@ function SpotifyComponent() {
                 break;
             }
         }
-        
-        setPlaylistID(playlist);
-    }
 
-    const renderPlaylistItems = async () => {
-        setPlaylistToShuffle(await fetchPlaylistItems());
+        setPlaylistToShuffle(await fetchPlaylistItems(playlist));
     }
          
 
@@ -86,19 +85,31 @@ function SpotifyComponent() {
         setToken(access_token);
     }, [])
 
+    //Displays playlist tracks as p elements
     const displayPlaylistItems = async () => {
-        await renderPlaylistItems();
+        const songsDiv = document.getElementById('songs')
         if (playlistToShuffle){
+            //pushes each element in object into an array
             playlistToShuffle.items.forEach((elem) => 
                 playlistTracks.push(elem)
             );
 
+            //Removes existing track elements if they exist
+            if (songsDiv.hasChildNodes()){
+                while (songsDiv.firstChild){
+                    songsDiv.lastChild.remove();
+                }
+            }
             
+            //creates p element for each element in tracklist
             playlistTracks.map(elem => {
                 const para = document.createElement('p')
                 para.innerHTML = elem.track.name;
-                document.getElementById('songs').appendChild(para)
+                songsDiv.appendChild(para)
+                return null;
             })
+
+            
 
             return (
                 <h1>Item</h1>
@@ -110,12 +121,15 @@ function SpotifyComponent() {
     
     return (
         <>
+            <h1>Spotify API Feature *WIP*</h1>
+            <h2>STEP 1:</h2>
             {/*Login oAuth*/}
             <a rel='noreferrer' target="_blank" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a> 
 
+            <h2>STEP 2:</h2>
             <button onClick={fetchPlaylists}>Click when signed in</button>
 
-            <h1>Spotify API Feature *WIP*</h1>
+            <h2>STEP 3:</h2>
             <button onClick={displayPlaylistItems}>Display Songs</button>
 
             {renderPlaylists()}
