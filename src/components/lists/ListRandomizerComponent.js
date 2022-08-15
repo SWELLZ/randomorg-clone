@@ -20,7 +20,7 @@ const ListRandomizer = () => {
     function handleSubmit(){
         var newText = Object.assign({}, text); //makes copy of text object
 
-        if (newText.text == false){
+        if (newText.text === false){
             throw new Error('Empty list');
         } else {
             setList(shuffleList(newText.text.split('\n')));

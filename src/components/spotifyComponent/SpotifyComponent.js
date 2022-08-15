@@ -35,7 +35,7 @@ function SpotifyComponent() {
         setPlaylists(await fetchUserPlaylists());
     }
 
-    //renders each playlist as a <p> element
+    //renders each playlist as a button element
     const renderPlaylists = () => {
         if (playlists.items) { //if data is recieved
             return (
@@ -71,7 +71,28 @@ function SpotifyComponent() {
 
         setPlaylistToShuffle(await fetchPlaylistItems(playlist));
     }
-         
+
+    function shuffleList(){
+        var len = playlistTracks.length;
+        var i = -1;
+        var j, k;
+
+        while (++i < len){ //loops over list until completely shuffled
+            j = Math.floor(Math.random() * len);
+            k = Math.floor(Math.random() * len);
+            var t = playlistTracks[j];
+            playlistTracks[j] = playlistTracks[k];
+            playlistTracks[k] = t;
+        }
+        if (document.getElementById('songs').hasChildNodes()){
+            while (document.getElementById('songs').firstChild){
+                document.getElementById('songs').lastChild.remove()
+            }
+            displayPlaylistItems()
+        } else {
+            displayPlaylistItems()
+        }
+    }     
 
     useEffect(() => {
         //variables for access token
@@ -89,35 +110,23 @@ function SpotifyComponent() {
     //Displays playlist tracks as p elements
     const displayPlaylistItems = async () => {
         const songsDiv = document.getElementById('songs')
-        if (playlistToShuffle){
-            //pushes each element in object into an array
-            playlistToShuffle.items.forEach((elem) => 
-                playlistTracks.push(elem)
-            );
+        //pushes each element in object into an array
+        playlistToShuffle.items.forEach((elem) => 
+            playlistTracks.push(elem)
+        );
 
-            //Removes existing track elements if they exist
-            if (songsDiv.hasChildNodes()){
-                while (songsDiv.firstChild){
-                    songsDiv.lastChild.remove();
-                }
-            }
-            
-            //creates p element for each element in tracklist
-            playlistTracks.map(elem => {
-                const para = document.createElement('p')
-                para.innerHTML = elem.track.name;
-                songsDiv.appendChild(para)
-                return null;
-            })
-
-            
-
-            return (
-                <h1>Item</h1>
-            )
-        } else {
-            return <p>No songs</p>
+        //Removes existing track elements if they exist
+        while (songsDiv.firstChild){
+            songsDiv.lastChild.remove();
         }
+        
+        //creates p element for each element in tracklist
+        playlistTracks.map(elem => {
+            const para = document.createElement('p')
+            para.innerHTML = elem.track.name;
+            songsDiv.appendChild(para)
+            return null;
+        })
     }
     
     return (
@@ -134,6 +143,9 @@ function SpotifyComponent() {
 
             <h2>STEP 4:</h2>
             <button onClick={displayPlaylistItems}>Display Songs</button>
+
+            <h2>STEP 5:</h2>
+            <button onClick={shuffleList}>Shuffle</button>
 
             <div id='songs'></div>
         </>
