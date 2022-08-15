@@ -40,7 +40,8 @@ function SpotifyComponent() {
         if (playlists.items) { //if data is recieved
             return (
                 <div>
-                    <h2>Playlists</h2>
+                    <h2>STEP 4:</h2>
+                    <p>Select playlist</p>
                     {playlists.items.map(element => {
                         return <button key={element.name} onClick={selectPlaylist}>{element.name}</button>
                     })}
@@ -129,10 +130,11 @@ function SpotifyComponent() {
             <h2>STEP 2:</h2>
             <button onClick={fetchPlaylists}>Click when signed in</button>
 
-            <h2>STEP 3:</h2>
+            {renderPlaylists()}
+
+            <h2>STEP 4:</h2>
             <button onClick={displayPlaylistItems}>Display Songs</button>
 
-            {renderPlaylists()}
             <div id='songs'></div>
         </>
     )
