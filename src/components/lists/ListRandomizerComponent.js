@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 //Handles the list functionality
 const ListRandomizer = () => {
@@ -81,6 +82,9 @@ const ListRandomizer = () => {
                 <h2>Part 2: Go!</h2>
                 <button onClick={handleSubmit}>{!text.visible ? 'Randomize' : 'Re-Shuffle'}</button>
                 <button onClick={resetForm}>Reset Form</button>
+                <CopyToClipboard text={[...list].splice(',').join('\n')}>
+                    <button>Copy Text</button>
+                </CopyToClipboard>
             </section>
             <ol>
                 {text.visible ? list.map(item => <li>{item}</li>) : null}
